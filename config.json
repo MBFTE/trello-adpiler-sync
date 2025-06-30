@@ -1,0 +1,6 @@
+{
+  "facebook": { "source": "FTE", "medium": "facebook" },
+  "display":  { "source": "FTE", "medium": "display" },
+  "tiktok":   { "source": "FTE", "medium": "tiktok" },
+  "audio":    { "source": "FTE", "medium": "audio" }
+}

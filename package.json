@@ -1,0 +1,12 @@
+{
+  "name": "trello-adpiler-sync",
+  "version": "1.0.0",
+  "description": "Sync Trello cards to Adpiler and client folders via GitHub Actions",
+  "main": "sync.js",
+  "scripts": {
+    "start": "node sync.js"
+  },
+  "dependencies": {
+    "axios": "^1.0.0"
+  }
+}
