@@ -17,14 +17,14 @@ const mapping = {
 async function getCards() {
   if (targetCardId) {
     // Single card endpoint
-    const url = \`https://api.trello.com/1/cards/\${targetCardId}?customFieldItems=true&fields=name,desc,labels,url\`;
+    const url = `https://api.trello.com/1/cards/${targetCardId}?customFieldItems=true&fields=name,desc,labels,url`;
     const resp = await axios.get(url, {
       params: { key: process.env.TRELLO_KEY, token: process.env.TRELLO_TOKEN }
     });
     return [resp.data];
   } else {
     // Board-wide fetch
-    const url = \`https://api.trello.com/1/boards/\${process.env.TRELLO_BOARD_ID}/cards?customFieldItems=true&fields=name,desc,labels,url\`;
+    const url = `https://api.trello.com/1/boards/${process.env.TRELLO_BOARD_ID}/cards?customFieldItems=true&fields=name,desc,labels,url`;
     const resp = await axios.get(url, {
       params: { key: process.env.TRELLO_KEY, token: process.env.TRELLO_TOKEN }
     });
@@ -39,7 +39,7 @@ async function run() {
     const labels = card.labels.map(l => l.name.toLowerCase());
     const match  = labels.find(l => mapping[l]);
     if (!match) {
-      console.warn(\`Skipping \${card.id}: no matching label\`);
+      console.warn(`Skipping ${card.id}: no matching label`);
       continue;
     }
 
@@ -49,7 +49,7 @@ async function run() {
     const clientField = (card.customFieldItems || [])
       .find(f => f.name === 'Client');
     if (!clientField?.value?.text) {
-      console.warn(\`Skipping \${card.id}: no Client field\`);
+      console.warn(`Skipping ${card.id}: no Client field`);
       continue;
     }
     const clientName = clientField.value.text;
@@ -67,7 +67,7 @@ async function run() {
       labels:     labels
     };
     fs.writeFileSync(
-      path.join(folder, \`\${card.id}.json\`),
+      path.join(folder, `${card.id}.json`),
       JSON.stringify(outData, null, 2)
     );
 
@@ -81,7 +81,7 @@ async function run() {
           utm_source: source,
           utm_medium: medium
         },
-        { headers: { Authorization: \`Bearer \${process.env.ADPILER_API_KEY}\` } }
+        { headers: { Authorization: `Bearer ${process.env.ADPILER_API_KEY}` } }
       );
     } catch (e) {
       console.error('Adpiler error for card', card.id, e.response?.data || e);
