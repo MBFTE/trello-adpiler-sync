@@ -1,0 +1,27 @@
+name: Auto Upload to AdPiler
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install axios dotenv
+      - name: Run uploader
+        run: node trello_adpiler_uploader.js
+        env:
+          TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
+          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          TRELLO_LIST_ID: ${{ secrets.TRELLO_LIST_ID }}
+          ADPILER_API_KEY: ${{ secrets.ADPILER_API_KEY }}
+          ADPILER_CLIENT_ID: ${{ secrets.ADPILER_CLIENT_ID }}
+          ADPILER_CAMPAIGN_ID: ${{ secrets.ADPILER_CAMPAIGN_ID }}
